@@ -1,0 +1,52 @@
+// Add transform effect with support to all browsers
+@mixin add-transform-effect($effect) {
+    -webkit-transform: $effect;
+    -moz-transform: $effect;
+    -o-transform: $effect;
+    -ms-transform: $effect;
+    transform: $effect;
+}
+
+// Add transition with support to all browsers
+@mixin add-transition($prop) {
+    -webkit-transition: $prop;
+    -moz-transition: $prop;
+    -o-transition: $prop;
+    -ms-transition: $prop;
+    transition: $prop;
+}
+
+// Add transform origin with support to all browsers
+@mixin add-transform-origin($origin) {
+    -webkit-transform-origin: $origin;
+    -moz-transform-origin: $origin;
+    -o-transform-origin: $origin;
+    -ms-transform-origin: $origin;
+    transition: $origin;
+}
+
+// Center vertically (Position should be provided in order for it to work)
+// * in case of position absolute, you need to assign position to parent as well
+@mixin vertical-align-middle {
+    top: 50%;
+    @include add-transform-effect(translateY(-50%));
+}
+
+// Center horizontally (Position should be provided in order for it to work)
+// * in case of position absolute, you need to assign position to parent as well
+@mixin horizontal-align-middle {
+    left: 50%;
+    @include add-transform-effect(translateX(-50%));
+}
+
+// ------------------ Custom mixins ------------------
+@mixin container-holder-defaults {
+    overflow: auto;
+    position: absolute;
+    top: 50px;
+    bottom: 60px;
+    left: 0px;
+    right: 0px;
+    padding: 0px 14px 10px 14px;
+    margin: auto;
+}

@@ -1,0 +1,83 @@
+apply plugin: 'eclipse-wtp'
+apply plugin: 'idea'
+
+buildscript {
+	ext {
+		swagger_version = '2.2.2'
+	}
+}
+
+repositories {
+	maven {
+			url "https://repo.sebank.se/artifactory/central-cache"
+	}
+}
+
+
+
+configurations {
+    swaggerCompile
+}
+
+dependencies {
+	swaggerCompile group:'io.swagger', name: 'swagger-codegen-cli', version: swagger_version
+}
+
+
+
+task npm_install (type:Exec) {
+	workingDir "${rootDir}"
+	if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+		commandLine 'cmd', '/c', 'npm', 'install'
+	} else {
+		commandLine 'npm', 'install'
+	}
+}
+
+task npm_build (type:Exec) {
+	workingDir "${rootDir}"
+	if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+		commandLine 'cmd', '/c', 'npm', 'run', 'build'
+	} else {
+		commandLine 'npm', 'run', 'build'
+	}
+}
+
+task npm (dependsOn: ['npm_install', 'npm_build']) {
+	outputs.upToDateWhen { false } 
+
+	doLast {	
+		ant.copy(todir:"../Momo.Web/wwwroot" ) {
+			fileset( dir:"${rootDir}/dist" )
+		}
+	}
+}
+
+//
+// Generate code from swagger
+//
+task swagger_clean {
+	doLast {
+		new File("${projectDir}/src/apis/generated").deleteDir()
+		new File("${projectDir}/generated").deleteDir()
+		
+		new File("${projectDir}/src/apis/generated").mkdirs()
+//		new File("${projectDir}/src/services/generated/model").mkdirs()
+	}
+}
+
+task swagger_generate(type:JavaExec, dependsOn: ['swagger_clean']){
+	main = 'io.swagger.codegen.SwaggerCodegen'
+	classpath = configurations.swaggerCompile
+	args "generate", "-o", "${projectDir}/generated", "-t", "${projectDir}/template/TypescriptNode", "-l", "typescript-node", "-i", "http://localhost:5011/swagger/v1/swagger.json"
+}
+
+task swagger(dependsOn: ['swagger_generate']) {
+	doLast {
+		ant.copy(todir:"${projectDir}/src/apis/generated" ) {
+			fileset( file:"${projectDir}/generated/api.ts" )
+		}
+
+		new File("${projectDir}/generated").deleteDir()
+	}
+}

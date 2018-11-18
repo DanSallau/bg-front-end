@@ -1,0 +1,108 @@
+/*
+@import './shared/shared-form';
+@import './samples/home-container';
+@import './shared/header';
+
+.app-container {
+    background-color: $body-background;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    overflow: hidden;
+    .route-holder {
+        position: absolute;
+        top: 60px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        overflow: auto;
+    }
+}
+
+*/
+
+@import '../css/bootstrap.min.css';
+@import '../css/custom.css';
+@import '../font-awesome/css/font-awesome.min.css';
+@import '../css/style.css';
+@import '../rs-plugin/css/settings.css';
+@import '../../../node_modules/quill/dist/quill.snow.css';
+
+
+.commnterBy-container {
+    i {
+        margin-right: 5px;
+    }
+
+    display: block;
+    margin-top: 15px;
+}
+
+.sidebarblock {
+    .choice-item {
+        font-size: 14px;
+        color: #ffffff;
+        font-family: 'Open Sans Bold', sans-serif;
+        line-height: 31px;
+        text-align: left;
+        padding-left: 10px;
+    }
+}
+
+.post {
+    >.empty-seacrh-message {
+        padding: 50px;
+        font-size: 30px;
+    }
+
+    .new-user,
+    .account-confirm,
+    .password-reset {
+        margin: 40px;
+    }
+
+    a {
+        &.forgot-password {
+            float: right;
+        }
+    }
+
+    .new-account-container,
+    .forgot-password-container {
+        padding-left: 30px;
+        width: 100% !important;
+    }
+
+    .forgot-password-container {
+        .btn-column {
+            button {
+                margin-right: 5px;
+                padding: 14px;
+            }
+        }
+    }
+
+    .postinfobot {
+        &.sign-up-footer {
+            padding-left: 30px;
+        }
+
+        .likeblock {
+            .liked-by-me {
+                color: darkgreen;
+            }
+
+            .disliked-by-me {
+                color: darkred;
+            }
+        }
+
+        .next {
+            .flag-by-me {
+                color: #777;
+            }
+        }
+    }
+}

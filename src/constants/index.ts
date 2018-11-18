@@ -1,0 +1,79 @@
+
+export const FETCH_USERS = 'FETCH_USERS';
+export type FETCH_USERS = typeof FETCH_USERS;
+
+export const FETCH_USER = 'FETCH_USER';
+export type FETCH_USER = typeof FETCH_USER;
+
+export const ADD_USERS = 'ADD_USERS';
+export type ADD_USERS = typeof ADD_USERS;
+
+export const REQUEST_USERS = 'REQUEST_USERS';
+export type REQUEST_USERS = typeof REQUEST_USERS;
+
+export const AUTH_USER = 'AUTH_USER';
+export type AUTH_USER = typeof AUTH_USER;
+
+export const REQUEST_AUTH_USER = 'REQUEST_AUTH_USER';
+export type REQUEST_AUTH_USER = typeof REQUEST_AUTH_USER;
+
+export const INVALIDATE_AUTH_USER = 'INVALIDATE_AUTH_USER';
+export type INVALIDATE_AUTH_USER = typeof INVALIDATE_AUTH_USER;
+
+export const LOGOUT_USER = 'LOGOUT_USER';
+export type LOGOUT_USER = typeof LOGOUT_USER;
+
+export const LOG_USER_ERROR = 'LOG_USER_ERROR';
+export type LOG_USER_ERROR = typeof LOG_USER_ERROR;
+
+
+export const LOG_RETURN_URL = 'LOG_RETURN_URL';
+export type LOG_RETURN_URL = typeof LOG_RETURN_URL;
+
+export const LOG_ACCOUNT_ERROR = 'LOG_ACCOUNT_ERROR';
+export type LOG_ACCOUNT_ERROR = typeof LOG_ACCOUNT_ERROR;
+
+export const INVALIDATE_POST = "INVALIDATE_POST";
+export type INVALIDATE_POST = typeof INVALIDATE_POST;
+
+export const REQUEST_POST = 'REQUEST_POST';
+export type REQUEST_POST = typeof REQUEST_POST;
+
+export const RECEIVE_POST = 'RECEIVE_POST';
+export type RECEIVE_POST = typeof RECEIVE_POST;
+
+export const LOG_POST_ERROR = 'LOG_POST_ERROR';
+export type LOG_POST_ERROR = typeof LOG_POST_ERROR;
+
+export const REQUEST_COMMENT = 'REQUEST_COMMENT';
+export type REQUEST_COMMENT = typeof REQUEST_COMMENT;
+
+export const LOG_COMMENT_ERROR = 'LOG_COMMENT_ERROR';
+export type LOG_COMMENT_ERROR = typeof LOG_COMMENT_ERROR;
+
+
+
+export const INVALIDATE_POLL = "INVALIDATE_POLL";
+export type INVALIDATE_POLL = typeof INVALIDATE_POLL;
+
+export const REQUEST_POLL = 'REQUEST_POLL';
+export type REQUEST_POLL = typeof REQUEST_POLL;
+
+export const RECEIVE_POLL = 'RECEIVE_POLL';
+export type RECEIVE_POLL = typeof RECEIVE_POLL;
+
+export const LOG_POLL_ERROR = 'LOG_POLL_ERROR';
+export type LOG_POLL_ERROR = typeof LOG_POLL_ERROR;
+
+
+export const INVALIDATE_CATEGORY = "INVALIDATE_CATEGORY";
+export type INVALIDATE_CATEGORY = typeof INVALIDATE_CATEGORY;
+
+export const REQUEST_CATEGORY = 'REQUEST_CATEGORY';
+export type REQUEST_CATEGORY = typeof REQUEST_CATEGORY;
+
+export const RECEIVE_CATEGORY = 'RECEIVE_CATEGORY';
+export type RECEIVE_CATEGORY = typeof RECEIVE_CATEGORY;
+
+export const LOG_CATEGORY_ERROR = 'LOG_CATEGORY_ERROR';
+export type LOG_CATEGORY_ERROR = typeof LOG_CATEGORY_ERROR;

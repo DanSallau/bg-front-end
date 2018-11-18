@@ -1,0 +1,78 @@
+@import "./variables";
+.input-holder {
+    margin: 10px 0px;
+    text-align: left;
+    .label-text {
+        display: inline-block;
+        vertical-align: top;
+        width: 200px;
+        font-size: $default;
+        text-align: left;
+        margin-top: 10px;
+    }
+    .form-group {
+        display: inline-block;
+        vertical-align: top;
+        width: 300px;
+        .larger-radio-field {
+            .radio-holder {
+                width: 100%;
+            }
+        }
+    }
+    .shorter-field {
+        width: 130px !important;
+    }
+    &.full-legnth {
+        .form-group {
+            width: 100%;
+        }
+    }
+}
+
+.checkbox-holder {
+    .input-field {
+        width: 49%;
+        display: inline-block;
+    }
+}
+
+.notfound-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    text-align: center;
+    .content {
+        position: relative;
+        top: 25%;
+        .header {
+            font-size: 160px;
+            color: $blue-darker;
+            text-shadow: $text-shadow-3d;
+            line-height: 1;
+            font-weight: bold;
+        }
+        .desc {
+            font-size: 40px;
+            margin: 20px 0 60px;
+            color: $blue-darker;
+            text-shadow: $text-shadow-otto;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .input-holder {
+        .form-group {
+            width: 100%;
+        }
+    }
+    .checkbox-holder {
+        .input-field {
+            width: 100%;
+            display: block;
+        }
+    }
+}

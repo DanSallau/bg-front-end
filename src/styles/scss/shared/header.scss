@@ -1,0 +1,37 @@
+@import './variables';
+.app-header {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    height: 60px;
+    z-index: 10;
+    background: #292929;
+    color: #fff;
+    >.header-logo {
+        display: inline-block;
+        &:last-child {
+            position: absolute;
+            right: 0px;
+            top: 0;
+        }
+        >.logo-icon {
+            height: 60px;
+            width: 60px;
+        }
+    }
+    >.header-title {
+        display: inline-block;
+        padding-left: 20px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .app-header {
+        >.logo {
+            >.logo-icon {
+                height: 50px;
+                width: 50px;
+            }
+        }
+    }
+}

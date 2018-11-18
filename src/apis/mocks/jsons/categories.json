@@ -1,0 +1,42 @@
+[
+    {
+        "id": 2,
+        "name": "xxxxxx",
+        "imageUrl": "http://",
+        "createdOn": "2018-08-04T14:22:46.032Z",
+        "createdAt": "2018-08-04T14:22:46.018Z",
+        "updatedAt": "2018-08-04T14:22:46.018Z",
+        "userId": 1,
+        "CategoryItems": []
+    },
+    {
+        "id": 4,
+        "name": "xxxxxx",
+        "imageUrl": "http://",
+        "createdOn": "2018-08-04T14:22:46.032Z",
+        "createdAt": "2018-08-04T14:22:46.018Z",
+        "updatedAt": "2018-08-04T14:22:46.018Z",
+        "userId": 1,
+        "CategoryItems": []
+    },
+    {
+        "id": 1,
+        "name": "xxxxxx",
+        "imageUrl": "http://",
+        "createdOn": "2018-08-04T14:22:46.032Z",
+        "createdAt": "2018-08-04T14:22:46.018Z",
+        "updatedAt": "2018-08-04T14:22:46.018Z",
+        "userId": 1,
+        "CategoryItems": []
+    },
+    {
+        "id": 3,
+        "name": "xxxxxx",
+        "imageUrl": "http://",
+        "createdOn": "2018-08-04T14:22:46.032Z",
+        "createdAt": "2018-08-04T14:22:46.018Z",
+        "updatedAt": "2018-08-04T14:22:46.018Z",
+        "userId": 1,
+        "CategoryItems": []
+    }
+]

@@ -1,0 +1,28 @@
+[
+    {
+        "id": 1,
+        "question": "Typescript Reflect.getMetadata design:type returns Object instead of ?",
+        "isPollOfTheWeek": true,
+        "createdOn": "2018-08-04T14:22:46.032Z",
+        "expiresOn": "2018-08-04T14:22:46.017Z",
+        "likesCount": 5,
+        "dislikesCount": 0,
+        "createdAt": "2018-08-04T14:22:46.017Z",
+        "updatedAt": "2018-08-04T14:22:46.017Z",
+        "userId": 1,
+        "PollChoices": []
+    },
+    {
+        "id": 2,
+        "question": "Typescript Reflect.getMetadata design:type returns Object instead of ?",
+        "isPollOfTheWeek": false,
+        "createdOn": "2018-08-04T14:22:46.032Z",
+        "expiresOn": "2018-08-04T14:22:46.017Z",
+        "likesCount": 5,
+        "dislikesCount": 0,
+        "createdAt": "2018-08-04T14:22:46.017Z",
+        "updatedAt": "2018-08-04T14:22:46.017Z",
+        "userId": 1,
+        "PollChoices": []
+    }
+]
