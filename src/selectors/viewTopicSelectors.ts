@@ -4,36 +4,34 @@ import { IAccountState } from '../interfaces/account';
 
 import * as _ from 'lodash';
 
-const posts = (state, ownProps) => state.posts;
-
-const routeProps = (state, ownProps) => ownProps;
+const post = (state, ownProps) => state.selectedPost;
 
 const account: any = (state, ownProps) => state.account;
 
+const routeProps = (state, ownProps) => ownProps;
+
 const selectedPost = createSelector(
-    [posts, routeProps, account],
-    (postList, props, accountDetail: IAccountState) => {
-        const selectedPost: IPostModel = postList.items.find((post: IPostModel, index: number) =>
-            post.id == props.match.params.postId
-        );
-        if (!selectedPost) return;
+    [post, account],
+    (selectedPost, accountDetail: IAccountState) => {
+        const postItem = selectedPost.post
+        if (!postItem.PostVotes) return;
         return {
-            ...selectedPost,
-            likesCount: selectedPost.PostVotes.filter(v => v.postId === selectedPost.id && v.type === 'UP').length,
-            dislikesCount: selectedPost.PostVotes.filter(v => v.postId === selectedPost.id && v.type === 'DOWN').length,
-            likedByMe: selectedPost.PostVotes.some(v => (v.postId === selectedPost.id && v.type === 'UP' && v.userId === accountDetail.user.id)),
-            disLikedByMe: selectedPost.PostVotes.some(v => (v.postId === selectedPost.id && v.type === 'DOWN' && v.userId === accountDetail.user.id)),
-            flag: selectedPost.PostVotes.some(v => v.postId === selectedPost.id && v.type === 'FLAG' && v.userId === accountDetail.user.id),
+            ...postItem,
+            likesCount: postItem.PostVotes.filter(v => v.postId === postItem.id && v.type === 'UP').length,
+            dislikesCount: postItem.PostVotes.filter(v => v.postId === postItem.id && v.type === 'DOWN').length,
+            likedByMe: postItem.PostVotes.some(v => (v.postId === postItem.id && v.type === 'UP' && v.userId === accountDetail.user.id)),
+            disLikedByMe: postItem.PostVotes.some(v => (v.postId === postItem.id && v.type === 'DOWN' && v.userId === accountDetail.user.id)),
+            flag: postItem.PostVotes.some(v => v.postId === postItem.id && v.type === 'FLAG' && v.userId === accountDetail.user.id),
         }
     }
 )
 
 const comments = createSelector(
-    [posts, routeProps, account],
-    (postList, props, accountDetail: IAccountState) => {
-        const commentList: IPostModel = postList.items.find((post: IPostModel, index: number) =>
-            post.id == props.match.params.postId
-        ).Comments.map((c: ICommentModel, i) => ({
+    [post, account],
+    (selectedPost: any, accountDetail: IAccountState) => {
+        const postItem = selectedPost.post;
+        if (!postItem.Comments) return;
+        const commentList: Array<ICommentModel> = postItem.Comments.map((c: ICommentModel, i) => ({
             ...c,
             likesCount: c.CommentVotes.filter(v => v.commentId === c.id && v.type === 'UP').length,
             dislikesCount: c.CommentVotes.filter(v => (v.commentId === c.id && v.type === 'DOWN')).length,

@@ -9,6 +9,10 @@ export class PostGeneratedApi {
         return axios.get(`${config.socket}/api/posts`);
     }
 
+    getPostById(postId: number): AxiosPromise<IPostModel> {
+        return axios.get(`${config.socket}/api/post/${postId}`);
+    }
+
     createPost(post: IPostModel, token: string): AxiosPromise<IPostModel[]> {
         let configRequest: AxiosRequestConfig = {
             headers: {
@@ -19,7 +23,7 @@ export class PostGeneratedApi {
         return axios.post(`${config.socket}/api/post/create-post`, post, configRequest);
     }
 
-    castPostVote(post: IPostModel, token: string): AxiosPromise<IPostModel[]> {
+    castPostVote(post: IPostModel, token: string): AxiosPromise<IPostModel> {
         let configRequest: AxiosRequestConfig = {
             headers: {
                 'Authorization': `JWT ${token}`,
@@ -33,7 +37,7 @@ export class PostGeneratedApi {
         return axios.get(`${config.socket}/api/post/search-post-by-text?searchText=${searchText}`);
     }
     
-    flagPost(post: IPostModel, token: string): AxiosPromise<IPostModel[]> {
+    flagPost(post: IPostModel, token: string): AxiosPromise<IPostModel> {
         let configRequest: AxiosRequestConfig = {
             headers: {
                 'Authorization': `JWT ${token}`,

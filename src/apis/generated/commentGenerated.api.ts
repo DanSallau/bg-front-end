@@ -5,7 +5,7 @@ import config from '../../configs'
 export class CommentGeneratedApi {
     constructor() { }
 
-    createComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel[]> {
+    createComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel> {
         let configRequest: AxiosRequestConfig = {
             headers: {
                 'Authorization': `JWT ${token}`,
@@ -15,7 +15,7 @@ export class CommentGeneratedApi {
         return axios.post(`${config.socket}/api/comment/create-comment`, comment, configRequest);
     }
 
-    castCommentVote(comment: ICommentModel, token: string): AxiosPromise<IPostModel[]> {
+    castCommentVote(comment: ICommentModel, token: string): AxiosPromise<IPostModel> {
         let configRequest: AxiosRequestConfig = {
             headers: {
                 'Authorization': `JWT ${token}`,
@@ -25,7 +25,7 @@ export class CommentGeneratedApi {
         return axios.post(`${config.socket}/api/comment/vote-on-comment`, comment, configRequest);
     }
 
-    flagComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel[]> {
+    flagComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel> {
         let configRequest: AxiosRequestConfig = {
             headers: {
                 'Authorization': `JWT ${token}`,

@@ -12,19 +12,19 @@ export class CommentApi {
         this.commentGeneratedApi = new CommentGeneratedApi;
     }
 
-    createComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel[]> {
+    createComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel> {
         if (process.env.NODE_ENV === 'production' || config.isOnline) {
             return this.commentGeneratedApi.createComment(comment, token);
         }
     }
 
-    castCommentVote(comment: ICommentModel, token: string): AxiosPromise<IPostModel[]> {
+    castCommentVote(comment: ICommentModel, token: string): AxiosPromise<IPostModel> {
         if (process.env.NODE_ENV === 'production' || config.isOnline) {
             return this.commentGeneratedApi.castCommentVote(comment, token);
         }
     }
 
-    flagComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel[]> {
+    flagComment(comment: ICommentModel, token: string): AxiosPromise<IPostModel> {
         if (process.env.NODE_ENV === 'production' || config.isOnline) {
             return this.commentGeneratedApi.flagComment(comment, token);
         }

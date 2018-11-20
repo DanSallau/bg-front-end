@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch: Dispatch<any>) => {
         receivePosts: (json: Array<IPostModel>) => dispatch(actions.receivePosts(json)),
         logPollsError: (error: any) => dispatch(actions.logPollsError(error)),
         logAccountError: (error: any) => dispatch(actions.logAccountError(error)),
-        logPostError: (err: IError) => dispatch(actions.logPostError(err))
+        logPostError: (err: IError) => dispatch(actions.logPostsError(err))
     }
 };
 

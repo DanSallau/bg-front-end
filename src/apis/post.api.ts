@@ -23,19 +23,31 @@ export class PostApi {
         }
     }
 
+    getPostById(id: number): AxiosPromise<IPostModel> {
+        if (process.env.NODE_ENV === 'production' || config.isOnline) {
+            return this.postGeneratedApi.getPostById(id);
+        } else {
+            return <AxiosPromise>new Promise(r => {
+                setTimeout(() => {
+                    r(this.postMockApi.getPosts);
+                }, config.delay);
+            });
+        }
+    }
+
     createPost(post: IPostModel, token: string): AxiosPromise<IPostModel[]> {
         if (process.env.NODE_ENV === 'production' || config.isOnline) {
             return this.postGeneratedApi.createPost(post, token);
         }
     }
 
-    castPostVote(post: IPostModel, token: string): AxiosPromise<IPostModel[]> {
+    castPostVote(post: IPostModel, token: string): AxiosPromise<IPostModel> {
         if (process.env.NODE_ENV === 'production' || config.isOnline) {
             return this.postGeneratedApi.castPostVote(post, token);
         }
     }
 
-    flagPost(post: IPostModel, token: string): AxiosPromise<IPostModel[]> {
+    flagPost(post: IPostModel, token: string): AxiosPromise<IPostModel> {
         if (process.env.NODE_ENV === 'production' || config.isOnline) {
             return this.postGeneratedApi.flagPost(post, token);
         }

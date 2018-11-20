@@ -1,4 +1,4 @@
-import { IAccountActionState, IrequestAuth } from '../interfaces/Actions';
+import { IAccountActionState, IRequestAuth } from '../interfaces/Actions';
 import { IError} from '../interfaces/common';
 import { IUserModel } from '../interfaces/Users';
 import * as constants from '../constants';
@@ -31,7 +31,7 @@ export function authUser(user: IUserModel, token: string): IAccountActionState {
     return { type: constants.AUTH_USER, user, token }
 }
 
-export function requestAuth(): IrequestAuth {
+export function requestAuth(): IRequestAuth {
     return { type: constants.REQUEST_AUTH_USER }
 }
 

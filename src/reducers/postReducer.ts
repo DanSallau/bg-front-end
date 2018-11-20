@@ -1,5 +1,5 @@
 import { postActions } from '../actions/postActions'
-import { RECEIVE_POST, REQUEST_POST, INVALIDATE_POST, LOG_POST_ERROR } from '../constants';
+import { RECEIVE_POSTS, REQUEST_POSTS, INVALIDATE_POSTS, LOG_POSTS_ERROR } from '../constants';
 
 const initialState = {
     isFetching: false,
@@ -11,36 +11,29 @@ const initialState = {
 
 export default (state = initialState, action: postActions) => {
     switch (action.type) {
-        case RECEIVE_POST:
-            console.log("Object is receiving");
+        case RECEIVE_POSTS:
             return {
                 ...state,
                 items: action.posts,
                 isFetching: false,
                 didInvalidate: false
             }
-        /*
-        return Object.assign({}, state, {
-            items: action.posts,
-            isFetching: false,
-            didInvalidate: false
-        });*/
 
-        case REQUEST_POST:
+        case REQUEST_POSTS:
             {
                 return Object.assign({}, state, {
                     isFetching: true,
                     didInvalidate: false
                 });
             }
-        case INVALIDATE_POST:
+        case INVALIDATE_POSTS:
             {
                 return Object.assign({}, state, {
                     isFetching: false,
                     didInvalidate: true
                 });
             }
-        case LOG_POST_ERROR:
+        case LOG_POSTS_ERROR:
             return {
                 ...state,
                 error: action.error,

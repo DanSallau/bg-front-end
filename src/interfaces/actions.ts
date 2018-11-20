@@ -5,6 +5,7 @@ import { IPostModel } from './posts';
 import { IPollModel } from './polls';
 import { ICategoryModel } from './categories';
 import { IError } from './common';
+
 export interface IAddUsers {
     type: constants.ADD_USERS,
     users: Array<IUserModel>
@@ -27,6 +28,20 @@ export interface IAccountActionState {
     returnUrl?: string,
 }
 
+export interface IPostsState {
+    type?: string;
+    posts?: Array<IPostModel>;
+    receivedAt?: string;
+    error?: any;
+}
+
+export interface ISelectedPostState {
+    type?: string;
+    post?: IPostModel;
+    receivedAt?: string;
+    error?: any;
+}
+
 export interface IPollActionState {
     type: string,
     polls?: Array<IPollModel>,
@@ -45,25 +60,6 @@ export interface ICategoryActionState {
     error?: any
 }
 
-export interface IReceivePosts {
-    type: constants.RECEIVE_POST,
-    posts: Array<IPostModel>
-    receivedAt: string
-}
-
-export interface IRequestPosts {
-    type: constants.REQUEST_POST
-}
-
-export interface ILogPostError {
-    type: constants.LOG_POST_ERROR,
-    error: any,
-}
-
-export interface IInvalidatePosts {
-    type: constants.INVALIDATE_POST
-}
-
-export interface IrequestAuth {
+export interface IRequestAuth {
     type: constants.REQUEST_AUTH_USER;
 }

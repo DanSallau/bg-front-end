@@ -8,8 +8,8 @@ import * as quill from "quill";
 import { AxiosResponse } from 'axios';
 import { Redirect } from 'react-router-dom';
 
+import { match } from "react-router";
 
-import config from '../../configs';
 // import * as FormData from 'form-data';
 import { CommentApi } from '../../apis/comment.api';
 import { PostApi } from '../../apis/post.api';
@@ -22,21 +22,22 @@ const Delta = require('quill-delta');
 const Quill = (quill as any).default ? (quill as any).default : quill;
 // const Delta = (delta as any).default ? (delta as any).default : quill;
 interface ITopicState {
-   // postDeltas: any,
+    // postDeltas: any,
 }
 
 export interface ITopicProps {
     selectedPost: IPostModel;
     comments: Array<ICommentModel>;
-    getPosts: () => void;
+    getSelectedPost: (id: number) => void;
     account: any,
     logAccountError: (error: IError) => void;
     logReturnUrl: (returnUrl: string) => void;
     history: ReactHistory;
     location: Location;
     logCommentError: (message: string) => void;
-    receivePosts: (json: Array<IPostModel>) => void;
+    receivePost: (json: IPostModel) => void;
     requestComment: () => void,
+    match: match<any>;
 }
 
 export default class TopicComponent extends React.PureComponent<ITopicProps, ITopicState> {
@@ -72,12 +73,12 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
     async componentWillMount() {
         const { account } = this.props;
-
+/*
         if (!account.user || !account.token || !account.isAuthenticated) {
             this.props.logReturnUrl(this.props.location.pathname)
             this.props.logAccountError({ type: 'account', message: 'Please log in to proceed' });
             this.props.history.push('signin');
-        }
+        }*/
     }
 
     saveToServer(file: File) {
@@ -122,13 +123,15 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
         if (source == 'api') {
             console.log("An API call triggered this change.");
         } else if (source == 'user') {
-           // this.setState({ postDeltas: delta });
+            // this.setState({ postDeltas: delta });
         }
 
         console.log("There is a change and is ", delta);
     }
 
     componentDidMount() {
+        this.props.getSelectedPost(this.props.match.params.postId);
+
         const toolbarOptions = [
             [{ header: [1, 2, false] }],
             ['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -142,7 +145,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         const mobileChoice = document.getElementById('editorMobile');
         const desktopChoice = document.getElementById('editor');
-
+        if(!mobileChoice && !desktopChoice) return;
         if (mobileChoice.offsetParent) {
             this.editor = new Quill(mobileChoice, {
                 modules: {
@@ -171,8 +174,6 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.editor.root.innerHTML = "";
 
-
-
     }
 
     handleUploadImage() {
@@ -194,7 +195,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
     }
 
     handlePostFlag(e: React.MouseEvent<HTMLElement>, id: number): void {
-        const { requestComment, account, receivePosts, logCommentError } = this.props;
+        const { requestComment, account, receivePost, logCommentError } = this.props;
 
         const post: IPostModel = {
             id: id,
@@ -206,7 +207,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.postApi.flagPost(post, account.token).then((response) => {
             if (response.status === 200) {
-                receivePosts(response.data);
+                receivePost(response.data);
                 this.editor.setText('');
             }
         }).catch((err) => {
@@ -217,7 +218,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
     }
 
     handlePostLike(e: React.MouseEvent<HTMLElement>): void {
-        const { requestComment, account, receivePosts, logCommentError } = this.props;
+        const { requestComment, account, receivePost, logCommentError } = this.props;
 
         const post: IPostModel = {
             id: Number(e.currentTarget.id),
@@ -229,7 +230,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.postApi.castPostVote(post, account.token).then((response) => {
             if (response.status === 200) {
-                receivePosts(response.data);
+                receivePost(response.data);
                 this.editor.setText('');
             }
         }).catch((err) => {
@@ -241,7 +242,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
     handlePostDislike(e: React.MouseEvent<HTMLElement>) {
 
-        const { requestComment, account, receivePosts, logCommentError } = this.props;
+        const { requestComment, account, receivePost, logCommentError } = this.props;
 
         const post: IPostModel = {
             id: Number(e.currentTarget.id),
@@ -253,7 +254,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.postApi.castPostVote(post, account.token).then((response) => {
             if (response.status === 200) {
-                receivePosts(response.data);
+                receivePost(response.data);
                 this.editor.setText('');
             }
         }).catch((err) => {
@@ -267,7 +268,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
     handleCommentFlag(e: React.MouseEvent<HTMLElement>): void {
 
-        const { requestComment, account, receivePosts, logCommentError } = this.props;
+        const { requestComment, account, receivePost, logCommentError } = this.props;
 
         const comment: ICommentModel = {
             id: Number(e.currentTarget.id),
@@ -279,7 +280,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.api.flagComment(comment, account.token).then((response) => {
             if (response.status === 200) {
-                receivePosts(response.data);
+                receivePost(response.data);
                 this.editor.setText('');
             }
         }).catch((err) => {
@@ -292,7 +293,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
     handleCommentLike(e: React.MouseEvent<HTMLElement>): void {
 
-        const { requestComment, account, receivePosts, logCommentError } = this.props;
+        const { requestComment, account, receivePost, logCommentError } = this.props;
 
         const comment: ICommentModel = {
             id: Number(e.currentTarget.id),
@@ -304,7 +305,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.api.castCommentVote(comment, account.token).then((response) => {
             if (response.status === 200) {
-                receivePosts(response.data);
+                receivePost(response.data);
                 this.editor.setText('');
             }
         }).catch((err) => {
@@ -315,7 +316,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
     }
 
     handleCommentDislike(e: React.MouseEvent<HTMLElement>) {
-        const { requestComment, account, receivePosts, logCommentError } = this.props;
+        const { requestComment, account, receivePost, logCommentError } = this.props;
 
         const comment: ICommentModel = {
             id: Number(e.currentTarget.id),
@@ -327,7 +328,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.api.castCommentVote(comment, account.token).then((response) => {
             if (response.status === 200) {
-                receivePosts(response.data);
+                receivePost(response.data);
                 this.editor.setText('');
             }
         }).catch((err) => {
@@ -338,7 +339,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
     }
 
     handleCreateComment(e: React.FormEvent<HTMLElement>) {
-        const { selectedPost, account, requestComment, receivePosts, logCommentError } = this.props;
+        const { selectedPost, account, requestComment, receivePost, logCommentError } = this.props;
 
         const comment: ICommentModel = {
             comment: this.editor.root.innerHTML,
@@ -350,7 +351,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
         this.api.createComment(comment, account.token).then((response) => {
             if (response.status === 200) {
-                receivePosts(response.data);
+                receivePost(response.data);
                 this.editor.setText('');
             }
         }).catch((err) => {
@@ -362,7 +363,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
 
     handleShareClick(e: React.MouseEvent<HTMLElement>, id: number) {
 
-        const { selectedPost, requestComment, receivePosts, account, logCommentError } = this.props;
+        const { selectedPost, requestComment, receivePost, account, logCommentError } = this.props;
         const selectedComment = selectedPost.Comments.find(comment => comment.id === id);
         const h = <FormattedDate value={selectedComment.createdOn} day="2-digit" month="short" year="2-digit" />;
         const newComment: ICommentModel = {
@@ -376,7 +377,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
         if (selectedComment) {
             this.api.createComment(newComment, account.token).then((response) => {
                 if (response.status === 200) {
-                    receivePosts(response.data);
+                    receivePost(response.data);
                 }
             }).catch((err) => {
                 logCommentError(err);
@@ -392,7 +393,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
     }
 
     handleSharePostClick(e: React.MouseEvent<HTMLElement>) {
-        const { selectedPost, requestComment, receivePosts, account, logCommentError } = this.props;
+        const { selectedPost, requestComment, receivePost, account, logCommentError } = this.props;
         const h = <FormattedDate value={selectedPost.createdOn} day="2-digit" month="short" year="2-digit" />;
         const newComment: ICommentModel = {
             comment: ` <blockquote> <span class="original">Asalin Marubuci - ${selectedPost.User.lastName} :</span> ${selectedPost.post} </blockquote>`,
@@ -407,7 +408,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
                 try {
                 } catch (err) { console.log(err) };
                 if (response.status === 200) {
-                    receivePosts(response.data);
+                    receivePost(response.data);
                 }
             }).catch((err) => {
                 logCommentError(err);
@@ -445,7 +446,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
             return <Redirect to={'signin'} />
         }
         return (
-            <div>
+            this.props.selectedPost ? <div className="topic-container">
                 <div className="post">
                     <div className="topwrap">
                         <div className="userinfo pull-left">
@@ -477,7 +478,7 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
                         <div className="likeblock pull-left">
                             <a href="#" className={"up" + (selectedPost.likedByMe ? ' liked-by-me' : '')}>
                                 <i className="fa fa-thumbs-o-up" id={selectedPost.id.toString()}
-                                    onClick={ this.handlePostLike}></i>{selectedPost.likesCount}</a>
+                                    onClick={this.handlePostLike}></i>{selectedPost.likesCount}</a>
                             <a href="#" className={"down" + (selectedPost.disLikedByMe ? ' disliked-by-me' : '')}>
                                 <i className="fa fa-thumbs-o-down" id={selectedPost.id.toString()}
                                     onClick={this.handlePostDislike}></i>{selectedPost.dislikesCount}</a>
@@ -629,6 +630,9 @@ export default class TopicComponent extends React.PureComponent<ITopicProps, ITo
                 </div>
 
             </div>
+            :
+            null
+
         )
     }
 }

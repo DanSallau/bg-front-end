@@ -1,47 +1,47 @@
 import { IPostModel } from '../interfaces/posts';
 import * as constants from '../constants';
 import { Dispatch } from 'redux';
-import { IReceivePosts, IRequestPosts, IInvalidatePosts, ILogPostError } from '../interfaces/Actions';
+import { IPostsState } from '../interfaces/Actions';
 import { AxiosResponse } from 'axios';
 import { PostApi } from '../apis/post.api'
 
 const postApi = new PostApi()
 
-export function requestPosts(): IRequestPosts {
-    return { type: constants.REQUEST_POST }
+export function requestPosts(): IPostsState {
+    return { type: constants.REQUEST_POSTS }
 }
 
-export function receivePosts(posts: Array<IPostModel>): IReceivePosts {
+export function receivePosts(posts: Array<IPostModel>): IPostsState {
     return {
-        type: constants.RECEIVE_POST,
+        type: constants.RECEIVE_POSTS,
         receivedAt: Date.now().toString(),
         posts: posts
     }
 }
 
-export function invalidatePosts(): IInvalidatePosts {
-    return { type: constants.INVALIDATE_POST }
+export function invalidatePosts(): IPostsState {
+    return { type: constants.INVALIDATE_POSTS }
 }
 
-export function logPostError(error: any): ILogPostError {
+export function logPostsError(error: any): IPostsState {
     return {
-        type: constants.LOG_POST_ERROR,
+        type: constants.LOG_POSTS_ERROR,
         error,
     }
 }
 
 function fetchPosts() {
-    return (dispatch: Dispatch<IReceivePosts | any>, getState: () => {}) => {
+    return (dispatch: Dispatch<IPostsState | any>, getState: () => {}) => {
         dispatch(requestPosts());
 
         return postApi
             .getPosts
             .then((json: AxiosResponse) => dispatch(receivePosts(json.data)))
-            .catch(err => dispatch(logPostError(err)))
+            .catch(err => dispatch(logPostsError(err)))
     }
 }
 
-function shouldFetchPosts(state: any) {
+function shouldFetchPosts(state) {
     const posts = state.posts;
     if (posts.items.length === 0) {
         return true;
@@ -53,7 +53,7 @@ function shouldFetchPosts(state: any) {
 }
 
 export function fetchPostsIfNeeded() {
-    return (dispatch: Dispatch<IReceivePosts | any>, getState: () => {}) => {
+    return (dispatch: Dispatch<IPostsState | any>, getState: () => {}) => {
         if (shouldFetchPosts(getState())) {
             return dispatch(fetchPosts());
         } else {
@@ -62,13 +62,13 @@ export function fetchPostsIfNeeded() {
     }
 }
 export function createPost(post: IPostModel) {
-    return (dispatch: Dispatch<IReceivePosts | any>, getState: () => any) => {
+    return (dispatch: Dispatch<IPostsState | any>, getState: () => { account: { token: string}}) => {
         dispatch(requestPosts());
         const token = getState().account.token;
         return postApi
             .createPost(post, token)
             .then((json: AxiosResponse) => dispatch(receivePosts(json.data)))
-            .catch(err => dispatch(logPostError(err)));
+            .catch(err => dispatch(logPostsError(err)));
     }
 }
-export type postActions = IReceivePosts | IRequestPosts | IInvalidatePosts | ILogPostError;
+export type postActions = IPostsState;

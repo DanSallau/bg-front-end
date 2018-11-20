@@ -11,10 +11,10 @@ import { IPostModel } from '../../interfaces/posts';
 
 const mapDispatchToProps = (dispatch : Dispatch <any>) => {
     return {
-         getPosts: () => dispatch(actions.fetchPostsIfNeeded()),
+         getSelectedPost: (id: number) => dispatch(actions.fetchPostIfNeeded(id)),
          requestComment: () => dispatch(actions.requestComment()),
          logCommentError: (err: any) => dispatch(actions.logCommentError(err)),
-         receivePosts: (json: Array<IPostModel>) => dispatch(actions.receivePosts(json))
+         receivePost: (json: IPostModel) => dispatch(actions.receivePost(json))
     }
 };
 

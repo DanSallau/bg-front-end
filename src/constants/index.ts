@@ -45,6 +45,21 @@ export type RECEIVE_POST = typeof RECEIVE_POST;
 export const LOG_POST_ERROR = 'LOG_POST_ERROR';
 export type LOG_POST_ERROR = typeof LOG_POST_ERROR;
 
+
+export const INVALIDATE_POSTS = "INVALIDATE_POST";
+export type INVALIDATE_POSTS = typeof INVALIDATE_POST;
+
+export const REQUEST_POSTS = 'REQUEST_POSTS';
+export type REQUEST_POSTS = typeof REQUEST_POSTS;
+
+export const RECEIVE_POSTS = 'RECEIVE_POSTS';
+export type RECEIVE_POSTS = typeof RECEIVE_POSTS;
+
+export const LOG_POSTS_ERROR = 'LOG_POSTS_ERROR';
+export type LOG_POSTS_ERROR = typeof LOG_POSTS_ERROR;
+
+
+
 export const REQUEST_COMMENT = 'REQUEST_COMMENT';
 export type REQUEST_COMMENT = typeof REQUEST_COMMENT;
 
