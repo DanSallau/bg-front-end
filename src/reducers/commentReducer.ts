@@ -1,4 +1,4 @@
-import { REQUEST_COMMENT, LOG_COMMENT_ERROR } from '../constants';
+import { REQUEST_COMMENT, LOG_COMMENT_ERROR, RECEIVE_COMMENT } from '../constants';
 import { categoryActions } from '../actions/categoryActions';
 
 const initialState = {
@@ -22,7 +22,12 @@ export default (state = initialState, action: categoryActions) => {
                 error: action.error,
                 isFetching: false,
             }
-
+        case RECEIVE_COMMENT: {
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: false,
+            });
+        }
         default:
             return state;
 

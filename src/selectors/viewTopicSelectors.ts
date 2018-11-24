@@ -17,11 +17,11 @@ const selectedPost = createSelector(
         if (!postItem.PostVotes) return;
         return {
             ...postItem,
-            likesCount: postItem.PostVotes.filter(v => v.postId === postItem.id && v.type === 'UP').length,
-            dislikesCount: postItem.PostVotes.filter(v => v.postId === postItem.id && v.type === 'DOWN').length,
-            likedByMe: postItem.PostVotes.some(v => (v.postId === postItem.id && v.type === 'UP' && v.userId === accountDetail.user.id)),
-            disLikedByMe: postItem.PostVotes.some(v => (v.postId === postItem.id && v.type === 'DOWN' && v.userId === accountDetail.user.id)),
-            flag: postItem.PostVotes.some(v => v.postId === postItem.id && v.type === 'FLAG' && v.userId === accountDetail.user.id),
+            likesCount: postItem.PostVotes.filter(v => v.type === 'UP').length,
+            dislikesCount: postItem.PostVotes.filter(v => v.type === 'DOWN').length,
+            likedByMe: postItem.PostVotes.some(v => (v.type === 'UP' && v.userId === accountDetail.user.id)),
+            disLikedByMe: postItem.PostVotes.some(v => (v.type === 'DOWN' && v.userId === accountDetail.user.id)),
+            flag: postItem.PostVotes.some(v => v.type === 'FLAG' && v.userId === accountDetail.user.id),
         }
     }
 )
@@ -33,11 +33,11 @@ const comments = createSelector(
         if (!postItem.Comments) return;
         const commentList: Array<ICommentModel> = postItem.Comments.map((c: ICommentModel, i) => ({
             ...c,
-            likesCount: c.CommentVotes.filter(v => v.commentId === c.id && v.type === 'UP').length,
-            dislikesCount: c.CommentVotes.filter(v => (v.commentId === c.id && v.type === 'DOWN')).length,
-            likedByMe: c.CommentVotes.some(v => (v.commentId === c.id && v.type === 'UP' && v.userId === accountDetail.user.id)),
-            disLikedByMe: c.CommentVotes.some(v => (v.commentId === c.id && v.type === 'DOWN' && v.userId === accountDetail.user.id)),
-            flag: c.CommentVotes.some(v => (v.commentId === c.id && v.type === 'FLAG' && v.userId === accountDetail.user.id)),
+            likesCount: c.CommentVotes.filter(v => v.type === 'UP').length,
+            dislikesCount: c.CommentVotes.filter(v => (v.type === 'DOWN')).length,
+            likedByMe: c.CommentVotes.some(v => (v.type === 'UP' && v.userId === accountDetail.user.id)),
+            disLikedByMe: c.CommentVotes.some(v => (v.type === 'DOWN' && v.userId === accountDetail.user.id)),
+            flag: c.CommentVotes.some(v => (v.type === 'FLAG' && v.userId === accountDetail.user.id)),
         }));
         return commentList;
     }

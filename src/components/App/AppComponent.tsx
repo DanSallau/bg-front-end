@@ -87,7 +87,7 @@ export default class AppComponent extends React.PureComponent<IAppComponent, {}>
 
         return (
             <div className="main-app">
-                <LoaderComponent isLoading={this.props.isLoading}></LoaderComponent>
+                <LoaderComponent toggle={this.props.isLoading}></LoaderComponent>
 
                 <Switch>
                     <AppRoute exact path="/" component={PostContainer} layout={PostLayout} />

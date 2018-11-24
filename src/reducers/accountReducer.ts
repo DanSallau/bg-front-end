@@ -3,7 +3,7 @@ import { accountActions } from '../actions';
 
 const initialState = {
     isAuthenticated: false,
-    authTime: false,
+    authTime: '',
     user: {},
     token: '',
     isFetching: false,

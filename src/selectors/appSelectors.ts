@@ -12,14 +12,17 @@ const posts = (state, ownProps) => state.posts;
 
 const routeProps = (state, ownProps) => ownProps;
 
+const comment = (state) => state.commentStatus;
+
 const isLoading = createSelector(
-    [posts, account, users, categories, polls],
-    (postList, accountList, usersList, categoryList, pollList) => {
+    [posts, account, users, categories, polls, comment],
+    (postList, accountList, usersList, categoryList, pollList, commentStatus) => {
         return (postList.isFetching) ||
             (accountList.isFetching ) ||
             (usersList.isFetching) ||
             (categoryList.isFetching) ||
-            (pollList.isFetching)
+            (pollList.isFetching) ||
+            (commentStatus.isFetching)
 
     }
 );

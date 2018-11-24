@@ -1,4 +1,4 @@
-import { IAccountActionState, IRequestAuth } from '../interfaces/Actions';
+import { IAccountActionState, IRequestAuth } from '../interfaces/actions';
 import { IError} from '../interfaces/common';
 import { IUserModel } from '../interfaces/Users';
 import * as constants from '../constants';

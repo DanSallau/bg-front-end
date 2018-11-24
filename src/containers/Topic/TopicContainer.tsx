@@ -14,7 +14,8 @@ const mapDispatchToProps = (dispatch : Dispatch <any>) => {
          getSelectedPost: (id: number) => dispatch(actions.fetchPostIfNeeded(id)),
          requestComment: () => dispatch(actions.requestComment()),
          logCommentError: (err: any) => dispatch(actions.logCommentError(err)),
-         receivePost: (json: IPostModel) => dispatch(actions.receivePost(json))
+         receivePost: (json: IPostModel) => dispatch(actions.receivePost(json)),
+         requestPost: () => dispatch(actions.requestPost())
     }
 };
 

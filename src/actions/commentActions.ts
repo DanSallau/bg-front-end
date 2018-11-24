@@ -1,4 +1,4 @@
-import {IPollActionState, ICommentActionState} from '../interfaces/Actions';
+import { IPollActionState, ICommentActionState } from '../interfaces/Actions';
 import { Dispatch } from 'redux';
 import * as constants from '../constants';
 import { IPollModel } from '../interfaces/polls';
@@ -9,6 +9,10 @@ const pollApis = new PollApi()
 
 export function requestComment(): ICommentActionState {
     return { type: constants.REQUEST_COMMENT }
+}
+
+export function receiveComment(): ICommentActionState {
+    return { type: constants.RECEIVE_COMMENT }
 }
 
 export function logCommentError(error: any): ICommentActionState {
